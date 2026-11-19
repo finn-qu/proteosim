@@ -8,8 +8,9 @@ version = "0.1.0"
 description = "This repository allows you to simulate a proteomics pipeline. It includes functions for protein digestion by proteases, Liquid Chromatography and Mass Spectrometry. The code is under active development."
 readme = "README.md"
 license = { text = "Apache 2.0" }
-authors = [{ name = "Finn Quosdorf",
-            email = "lw336@uni-heidelberg.de" }]
+authors = [
+    { name = "Finn Quosdorf", email = "lw336@uni-heidelberg.de" }
+    ]
 requires-python = ">=3.10"
 dependencies = [
     "numpy",
