@@ -4,6 +4,7 @@ from .protein_digestion import (
     digest_protein_sequence,
     digest_protein_collection,
     compute_sequence_coverage,
+    compare_sequence_coverages
 )
 from .liquid_chromatography import (
     predict_lc_retention_times,

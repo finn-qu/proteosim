@@ -1,4 +1,5 @@
 import re
+import pandas as pd
 
 enzyme_cleavage_patterns = {
     'LysC': r'(?<=K)',
@@ -31,6 +32,7 @@ def digest_protein_sequence(protein_seq, cleave_pattern, min_pep_len=5, max_pep_
     filtered_peptides = list(filter(lambda a : len(a) >= min_pep_len and len(a) <= max_pep_len, peptides))
     return filtered_peptides
 
+
 def digest_protein_collection(protein_map, cleave_pattern, min_pep_len=5, max_pep_len=30):
     
     """
@@ -58,6 +60,7 @@ def digest_protein_collection(protein_map, cleave_pattern, min_pep_len=5, max_pe
         peptide_collection[id] = digest_protein_sequence(seq, cleave_pattern, min_pep_len, max_pep_len)
 
     return peptide_collection
+
 
 def compute_sequence_coverage(protein_seq, peptides):
     """
@@ -87,3 +90,34 @@ def compute_sequence_coverage(protein_seq, peptides):
     coverage = sum(peptide_lengths) / len(protein_seq) * 100
 
     return coverage
+
+
+def compare_sequence_coverages(protein_map, cleavage_patterns_dict):
+    """
+    Digest all proteins in a dictionary using all given enzymes, compute the sequence coverage for each combination.
+    Create a boxplot with the coverage of each protease.
+
+    Parameters
+    ----------
+    protein_map : dict
+        With protein ids as keys and sequences as values.
+    cleavage_patterns_dict : dict
+        With proteases as keys and cleave patterns in the form of regular expressions as values.
+    
+    Returns
+    -------
+    DataFrame
+        With proteases, protein ids and the coverage.
+    """
+
+    digestions = []
+    for protease, cleave_pattern in cleavage_patterns_dict.items():
+        digestion = digest_protein_collection(protein_map, cleave_pattern)
+        for protein, peptides in digestion.items():
+            coverage = compute_sequence_coverage(protein_map[protein], peptides)
+            digestions.append({"protease": protease, "protein_id": protein, "coverage_pct": coverage})
+
+    coverage_df = pd.DataFrame(digestions)
+
+    coverage_df.boxplot(column="coverage_pct", by="protease")
+    return coverage_df
