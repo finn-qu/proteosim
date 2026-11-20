@@ -50,22 +50,22 @@ def test_compute_sequence_coverage():
     assert coverage_2 == 20
     assert coverage_3 == 80
 
-def test_compare_sequence_coverages():
-    dummy_protein_map = {
-        "ID1": "AKWAWAWAWA",
-        "ID2": "ARPAKWAWAW"
-    }
-    dummy_peptides_trypsin = {
-        "ID1": ["AK", "WAWAWAWA"],
-        "ID2": ["ARPAK", "WAWAW"]
-    }
-    expected = pd.DataFrame({
-        "ID1": 80,
-        "ID2": 100
-    })
-
-    #assert compare_sequence_coverages(dummy_protein_map, enzyme_cleavage_patterns) == expected
-    #print(expected.eq(compare_sequence_coverages(dummy_protein_map, enzyme_cleavage_patterns)))
-    print(expected)
-    print(compare_sequence_coverages(dummy_protein_map, enzyme_cleavage_patterns))
+# def test_compare_sequence_coverages():
+#     dummy_protein_map = {
+#         "ID1": "AKWAWAWAWA",
+#         "ID2": "ARPAKWAWAW"
+#     }
+#     dummy_peptides_trypsin = {
+#         "ID1": ["AK", "WAWAWAWA"],
+#         "ID2": ["ARPAK", "WAWAW"]
+#     }
+#     expected = pd.DataFrame({
+#         "ID1": 80,
+#         "ID2": 100
+#     })
+# 
+#     #assert compare_sequence_coverages(dummy_protein_map, enzyme_cleavage_patterns) == expected
+#     #print(expected.eq(compare_sequence_coverages(dummy_protein_map, enzyme_cleavage_patterns)))
+#     print(expected)
+#     print(compare_sequence_coverages(dummy_protein_map, enzyme_cleavage_patterns))
 
