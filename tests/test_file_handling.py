@@ -9,5 +9,3 @@ def test_fasta_reader():
     # which you expect to be now available as a dictionary
     assert protein_map["ID1"] == "BLABLABLA"
     assert protein_map["ID2"] == "TRALALALALALA"
-
-test_fasta_reader()

@@ -1,3 +1,5 @@
+import re
+
 enzyme_cleavage_patterns = {
     'LysC': r'(?<=K)',
     'LysN': r'(?=K)',
@@ -5,23 +7,29 @@ enzyme_cleavage_patterns = {
     'Trypsin': r'(?<=[KR])(?!P)',
 }
 
-def digest_protein_sequence(protein_seq, cleave_pattern):
+def digest_protein_sequence(protein_seq, cleave_pattern, min_pep_len=5, max_pep_len=30):
     """
-    Split the protein sequence at the cleavage pattern.
+    Split the protein sequence at the cleavage pattern and return all the obtained peptides that have the correct length.
 
     Parameters
     ----------
     protein_seq : str
-        A string containing the amino acid sequence.
-    cleave_pattern: dict
-        A dictionary with the proteases as keys and the cleavage patterns in the form of regular expressions as values.
+            A string containing the amino acid sequence.
+    cleave_pattern: str
+            Regular expression as the cleavage pattern.
+    min_pep_len : int, optional
+        Minimum number of amino acids a peptide needs to have to be returned (the default is 5).
+    max_pep_len : int, optional
+        Maximum number of amino acids a peptide needs to have to be returned (the default is 30).
     Returns
     -------
-    list
-        A list containing the substrings corresponding to the peptides obtained after digestion.
+    list of str
+        List containing the substrings corresponding to the peptides obtained after digestion.
     """
+
     peptides = re.split(cleave_pattern, protein_seq)
-    return peptides
+    filtered_peptides = list(filter(lambda a : len(a) >= min_pep_len and len(a) <= max_pep_len, peptides))
+    return filtered_peptides
 
 def digest_protein_collection(protein_map, cleave_pattern, min_pep_len=5, max_pep_len=30):
     
